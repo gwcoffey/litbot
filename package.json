@@ -1,0 +1,26 @@
+{
+  "name": "litbot",
+  "version": "0.0.1",
+  "description": "A mastodon bot framework for posting quotes/passages.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gwcoffey/litbot.git"
+  },
+  "author": "Geoff Coffey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gwcoffey/litbot/issues"
+  },
+  "homepage": "https://github.com/gwcoffey/litbot#readme",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "typescript": "^4.9.4"
+  }
+}
