@@ -1,1 +1,3 @@
 src/
+.mocharc.json
+tsconfig.json
