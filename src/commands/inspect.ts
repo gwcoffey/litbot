@@ -1,6 +1,6 @@
 import yargs, { exit } from 'yargs'
 import Post from "../types/post"
-import loadPostDataFromFile from '../lib/posts_loader'
+import { loadPostDataFromFile } from '../lib/posts_loader'
 import buildPostTree from '../lib/post_tree_builder'
 import PostTreeNode from '../types/post_tree_node'
 

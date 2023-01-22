@@ -1,6 +1,6 @@
 import Post from '../types/post'
 import { MastodonStatus } from '../types/mastodon_types'
-import loadPostDataFromFile from './posts_loader';
+import { loadPostDataFromFile } from './posts_loader';
 
 export default async function postRandomToMastodon(posts: Post[], instance: URL, auth: string) {
     const post = selectRandomPost(posts);

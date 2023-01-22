@@ -1,6 +1,6 @@
 import yargs from 'yargs'
 import postRandomToMastodon from '../lib/poster'
-import loadPostDataFromFile from '../lib/posts_loader'
+import { loadPostDataFromFile } from '../lib/posts_loader'
 
 exports.command = 'post <file> <instance> <token>'
 exports.description = 'Post to mastodon'
