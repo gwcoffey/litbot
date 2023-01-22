@@ -113,7 +113,7 @@ When the bot runs, it will select one post from your post data file at random an
 ```sh
 $ npx litbot post my/post_data.json https://myinstance.example.com xxx
 ```
-(Where `xxx` is the authorization token you got in [the Authorization step above](./#Authorization).)
+(Where `xxx` is the authorization token you got in [the Authorization step above](#Authorization).)
 
 ### Posting via a script
 
