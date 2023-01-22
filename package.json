@@ -1,5 +1,5 @@
 {
-  "name": "litbot",
+  "name": "@gwcoffey/litbot",
   "version": "0.0.1",
   "description": "A mastodon bot framework for posting quotes/passages.",
   "main": "dist/index.js",
