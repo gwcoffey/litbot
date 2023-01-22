@@ -1,0 +1,7 @@
+[
+    {
+        "text": "foo",
+        "location": ["bar"],
+        "content_warning": "baz"
+    }
+]
