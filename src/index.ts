@@ -1,7 +1,6 @@
 import postRandomToMastodon from "./lib/poster";
-import { loadPostDataFromFile }  from "./lib/posts_loader";
+import Post from "./types/post";
 
-export default async function loadAndPost(file: string, instance: URL, auth: string) {
-    const posts = await loadPostDataFromFile(file);
-    postRandomToMastodon(posts, instance, auth);
+export default async function post(posts: Post[], instance: URL, auth: string) {
+    await postRandomToMastodon(posts, instance, auth);
 }
