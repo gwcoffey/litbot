@@ -6,10 +6,10 @@ interface ValidationResult {
     errors?: string[]
 }
 
-export function validatePostJson(json: string): ValidationResult {
+export function validatePostJson(json: any): ValidationResult {
     const ajv = new Ajv2019({allErrors: true})
     const validator = ajv.compile(schema)
-    const is_valid = validator(JSON.parse(json))
+    const is_valid = validator(json)
 
     var result: ValidationResult = {ok: is_valid}
 
