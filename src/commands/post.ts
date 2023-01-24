@@ -27,7 +27,7 @@ exports.handler = execute
 async function execute(argv: any) {
     try {
         const posts = await loadPostDataFromFile(argv.file);
-        await postRandomToMastodon(posts, argv.instance, argv.auth);
+        await postRandomToMastodon(posts, argv.instance, argv.token);
         console.log('DONE');
     }
     catch (e: any) {

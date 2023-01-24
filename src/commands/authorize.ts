@@ -1,6 +1,8 @@
 import yargs from 'yargs'
 import * as readline from 'node:readline/promises';
 import * as process from 'process';
+import fetch from 'node-fetch';
+import FormData from 'form-data';
 import { MastodonApplication, MastodonToken}  from '../types/mastodon_types';
 
 exports.command = 'authorize <instance>'
@@ -83,7 +85,7 @@ async function fetchToken(instance: string, app: MastodonApplication, auth_code:
         process.exit(-1)
     }
 
-    return response.json();
+    return response.json() as Promise<MastodonToken>;
 }
 
 async function fetchMakeApp(instance: string): Promise<MastodonApplication> {
@@ -103,19 +105,19 @@ async function fetchMakeApp(instance: string): Promise<MastodonApplication> {
         process.exit(-1)
     }
 
-    return response.json();
+    return response.json() as Promise<MastodonApplication>;
 }
 
 function makeAppUrl(instance: string) {
     const url = new URL(instance);
     url.pathname = '/api/v1/apps';
-    return url;
+    return url.toString();
 }
 
 function makeTokenUrl(instance: string) {
     const url = new URL(instance);
     url.pathname = '/oauth/token';
-    return url;
+    return url.toString();
 }
 
 function makeAuthUrl(instance: string, client_id: string) {

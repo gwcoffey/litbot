@@ -1,6 +1,6 @@
 import Post from '../types/post'
 import { MastodonStatus } from '../types/mastodon_types'
-import { loadPostDataFromFile } from './posts_loader';
+import fetch from 'node-fetch';
 
 export default async function postRandomToMastodon(posts: Post[], instance: URL, auth: string) {
     const post = selectRandomPost(posts);
@@ -23,10 +23,10 @@ async function httpPost(post: Post, instance: URL, auth: string) {
     });
 }
 
-function makeUrl(instance: URL): URL {
+function makeUrl(instance: URL): string {
     const url = new URL(instance);
     url.pathname = '/api/v1/statuses';
-    return url;
+    return url.toString();
 }
 
 function makeStatusBody(post: Post) {
