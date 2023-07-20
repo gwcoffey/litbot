@@ -1,7 +1,16 @@
 [
-    {
-        "text": "foo",
-        "location": ["bar"],
-        "content_warning": "baz"
-    }
+	[
+		{
+			"status": "foo",
+			"poll": {
+				"options": ["one", "two"],
+				"expires_in": 10,
+				"multiple": true,
+				"hide_totals": true
+			},
+			"spoiler_text": "baz",
+			"visibility": "public",
+			"scheduled_at": 100
+		}
+    ]
 ]

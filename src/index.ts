@@ -1,6 +1,6 @@
 import postRandomToMastodon from "./lib/poster";
-import Post from "./types/post";
+import Thread from "./types/thread";
 
-export default async function post(posts: Post[], instance: URL, auth: string) {
-    await postRandomToMastodon(posts, instance, auth);
+export default async function post(threads: Thread[], instance: URL, auth: string) {
+    await postRandomToMastodon(threads, instance, auth);
 }

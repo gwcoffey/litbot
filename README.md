@@ -33,27 +33,42 @@ The module expects a data file with available post messages. The post data forma
 
 [schema]: https://github.com/gwcoffey/litbot/blob/main/src/schema/posts.schema.json
 
-It should be a JSON array of `Post` objects. Each `post` has these properties:
+It should be a JSON array of arrays of `Status` objects. Each array of statuses represents a thread of status messages to post all at once (although some can be scheduled). Each `status` matches the shape of [the `Status` message in Mastodon API](https://docs.joinmastodon.org/methods/statuses/#form-data-parameters) with these suported properties:
 
-* `text` (`string`, required): The Mastodon post text
-* `location` (`array` of `string`, required): Metadata about where the passage comes from
-* `content_warning` (`string`, optional): The content warning text, if applicable to this post
+* `post` (`string`, required): The Mastodon post status text
+* `poll` (`object`, required): The poll settings for this status post
+* `spoiler_text` (`string`, optional): The content warning text, if applicable to this post (when set, the post will be marked `sensitive` as well)
+* `visibility` (`string`, optional): The visibility setting for this status post
+* `scheduled_in` (`integer`, optional): When set, at the time of posting, litbot will calculate a timestamp <n> seconds in the future and set the `scheduled_at` property of the status to this timestamp)
 
-> Note: The location is not currently used for anything, but I have aspirations to add support for posting the source information for the passage as a reply some day.
-
-Here's an example of valid post data:
+Here's an example of valid post data, including various allowed combinations.
 
 ```json
 [
-   {
-      "text": "To be, or not to be, that is the question.",
-      "location": ["Hamlet", "Act 3", "Scene 1"]
-   },
-   {
-      "text": "Ram thou thy fruitful tidings in mine ears,\nThat long time have been barren.",
-      "location": ["Antony and Cleopatra", "Act 2", "Scene 5"],
-      "content_warning": "Bawdy"
-   }
+  [
+    {
+      "status": "To be, or not to be, that is the question."
+    },
+    {
+      "status": "Ram thou thy fruitful tidings in mine ears,\nThat long time have been barren.",
+      "spoiler_text": "Bawdy"
+    },
+    {
+      "status": "Wherefor art thou, Romeo?",
+      "poll": {
+        "options": ["Because my mother named me that", "Because I was meant to be"],
+        "expires_in": 300
+      }
+    },
+    {
+      "status": "To be or not to be, that is the question.",
+      "visibility": "private"
+    },
+    {
+      "status": "Tomorrow, and tomorrow, and tomorrow,\nCreeps in this petty pace from day to day,",
+      "scheduled_in": 86400
+    }
+  ]
 ]
 ```
 
@@ -66,43 +81,6 @@ $ npx litbot validate my/post_data.json
 ```
 
 This will report `OK` if the file is correct, or output schema violations.
-
-### Inspecting your post data
-
-You can also insepct your post data file. You can get a total post count:
-
-```sh
-$ npx litbot inspect my/post_data.json count
-Loaded 1531 posts…
-```
-
-Or count by location hierarchy:
-
-```sh
-$ npx litbot inspect my/post_data.json locations
-Hamlet
-  Act 1
-    Scene 1
-      => 11 posts
-    Scene 2
-      => 2 posts
-...
-```
-
-Or dump the post data to a markdown file for easier review:
-
-```sh
-$ npx litbot inspect my/post_data.json markdown
-# Hamlet
-## Act 1
-### Scene 1
-
-Long live the King!
-***
-Horatio says ’tis but our fantasy
-***
-...
-```
 
 ## Posting to Mastodon
 

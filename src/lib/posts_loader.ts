@@ -1,10 +1,10 @@
 import { readFile } from "node:fs/promises"
-import Post from "../types/post"
+import Thread from "../types/thread";
 
-export async function loadPostDataFromFile(path: string): Promise<Post[]> {
+export async function loadPostDataFromFile(path: string): Promise<Thread[]> {
     const data = await loadJson(path)
     sanityCheck(data, path)
-    return data as Post[]
+    return data as Thread[]
 }
 
 export async function loadJson(path: string): Promise<any> {
@@ -18,11 +18,5 @@ function sanityCheck(data: Promise<any>, path: string) {
     }
     if (data.length == 0) {
         throw Error(`did not find valid post data (empty array) in ${path}`)
-    }
-    if (!('text' in data[0])) {
-        throw Error(`did not find valid post data (no 'text' in first object) in ${path}`)
-    }
-    if (!('location' in data[0])) {
-        throw Error(`did not find valid post data (no 'location' in first object) in ${path}`)
     }
 }

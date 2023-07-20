@@ -1,5 +1,5 @@
-import chai from "chai"
-import chaiAsPromised from "chai-as-promised"
+import chai = require("chai");
+import chaiAsPromised = require("chai-as-promised");
 import { loadPostDataFromFile as load } from "../../src/lib/posts_loader";
 
 chai.use(chaiAsPromised);
@@ -29,6 +29,18 @@ describe('validate loading', () => {
 
     it('valid post data is loaded', async () => {
         var result = load('./spec/lib/data/posts_loader/valid.json')
-        await expect(result).to.become([{text: 'foo', location: ['bar'], content_warning: 'baz'}])
+        let expected = [[{
+            status: "foo",
+            poll: {
+                options: ["one", "two"],
+                expires_in: 10,
+                multiple: true,
+                hide_totals: true
+            },
+            spoiler_text: "baz",
+            visibility: "public",
+            scheduled_at: 100
+        }]]
+        await expect(result).to.become(expected)
     });
 });

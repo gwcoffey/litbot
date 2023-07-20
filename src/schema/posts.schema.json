@@ -1,35 +1,73 @@
 {
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "$id": "https://gwcoffey.com/schemas/litbot/posts",
-    "title": "Litbot Posts",
-    "description": "Posts data used as input for Litbot",
+    "$id": "https://gwcoffey.com/schemas/litbot/statuses",
+    "title": "Litbot Statuses",
+    "description": "Status data used as input for Litbot",
     "type": "array",
     "minItems": 1,
     "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["text", "location"],
-        "properties": {
-            "text": {
-                "type": "string",
-                "minLength": 1,
-                "description": "The post text"
-            },
-            "content_warning": {
-                "description": "(opitonal) A content warning (post will be marked sensitive)",
-                "type": "string",
-                "minLength": 1
-            },
-            "location": {
-                "type": "array",
-                "minItems": 1,
-                "description": "A path to this passage in the source material",
-                "items": {
-                    "type": "string",
-                    "minLength": 1
-                }
-            }
-        }
+    	"description": "Each item is one or more `status` objects",
+    	"type": "array",
+    	"minItems": 1,
+		"items": {
+			"description": "A mastodon `status` payload, with some special handling.",
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["status"],
+			"properties": {
+				"status": {
+					"type": "string",
+					"minLength": 1,
+					"description": "The status text"
+				},
+				"poll": {
+					"description": "(optional) Poll options",
+					"type": "object",
+					"required": ["options", "expires_in"],
+					"additionalProperties": false,
+					"properties": {
+						"options": {
+							"description": "The poll answer options",
+							"type": "array",
+							"minItems": 1,
+							"items": {
+								"type": "string"
+							}
+						},
+						"expires_in": {
+							"description": "How long the poll is open, in seconds",
+							"type": "integer",
+							"minimum": 1
+						},
+						"multiple": {
+							"description": "Can participatns pick multiple options?",
+							"type": "boolean",
+							"default": "false"
+						},
+						"hide_totals": {
+							"description": "Hide vote counts until the poll ends?",
+							"type": "boolean",
+							"default": "false"
+						}
+					}
+				},
+				"spoiler_text": {
+					"description": "(opitonal) A content warning (status will be marked sensitive)",
+					"type": "string",
+					"minLength": 1
+				},
+				"visibility": {
+					"description": "Sets the visibility of the posted status.",
+					"type": "string",
+					"enum": ["public", "unlisted", "private", "direct"],
+					"default": "public"
+				},
+				"scheduled_in": {
+					"description": "When to schedule this status update, expressed in seconds after the thread is posted (translates to `scheduled_at` in mastadon API)",
+					"type": "integer",
+					"minimum": 1
+				}
+			}
+		}
     }
 }
-
